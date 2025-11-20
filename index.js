@@ -66,10 +66,9 @@ function saveData() {
         return;
 
     }
-
-
-
 }
+
+
 function loadPatients() {
     fetch("http://localhost:8080/api/v1/patients")
         .then(response => response.json())
@@ -154,6 +153,55 @@ function deletePatient(id) {
 }
 
 function makeAppointment(id) {
+if(id){
+    document.getElementById("appointmentPatientId").value = id;
+    document.getElementById("customModal").style.display = "block";
+    //sessionStorage.setItem("Appointment", id);
+    // window.location.href = "nextPage.html";
+}
+    
 
-    alert("Create appointment for patient ID: " + id);
+    //alert("Create appointment for patient ID: " + id);
+}
+
+function closeAppointmentModal() {
+    document.getElementById("customModal").style.display = "none";
+}
+
+function saveAppointment() {
+    const id = document.getElementById("appointmentPatientId").value;
+    const doctorName = document.getElementById("appointmentDoctorName").value;
+    const time = document.getElementById("appointmentTime").value;
+    const date = document.getElementById("appointmentDate").value;
+    const desc = document.getElementById("appointmentDesc").value;
+
+    if (!doctorName||!time||!date || !desc) {
+        alert("Please fill all Details!");
+        return;
+    }
+
+    const data = {
+        doctorName: doctorName,
+        description: desc,
+        date: date,
+        time: time,
+        patient_id: id
+    };
+
+
+
+    fetch("http://localhost:8080/api/v2/appointments/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+        .then(res => res.json())
+        .then(() => {
+            alert("Appointment saved!");
+            closeAppointmentModal();
+            document.getElementById("appointmentDoctorName").value = "";
+            document.getElementById("appointmentTime").value = "";
+           document.getElementById("appointmentDate").value = "";
+            document.getElementById("appointmentDesc").value = "";
+        });
 }
