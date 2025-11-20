@@ -121,6 +121,14 @@
     border-bottom: 1px solid #dddddd;
   }
 
+  @media screen and (max-width: 1024px) {
+    body{
+      height: max-content;
+      width: max-content;
+    }
+    
+  }
+
  
 .custom-modal {
     display: none; 

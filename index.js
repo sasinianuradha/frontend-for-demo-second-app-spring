@@ -153,13 +153,12 @@ function deletePatient(id) {
 }
 
 function makeAppointment(id) {
-if(id){
-    document.getElementById("appointmentPatientId").value = id;
-    document.getElementById("customModal").style.display = "block";
-    //sessionStorage.setItem("Appointment", id);
-    // window.location.href = "nextPage.html";
-}
-    
+    if (id) {
+        document.getElementById("appointmentPatientId").value = id;
+        document.getElementById("customModal").style.display = "flex";
+        loadAppointments(id);
+    }
+
 
     //alert("Create appointment for patient ID: " + id);
 }
@@ -175,7 +174,7 @@ function saveAppointment() {
     const date = document.getElementById("appointmentDate").value;
     const desc = document.getElementById("appointmentDesc").value;
 
-    if (!doctorName||!time||!date || !desc) {
+    if (!doctorName || !time || !date || !desc) {
         alert("Please fill all Details!");
         return;
     }
@@ -188,7 +187,7 @@ function saveAppointment() {
         patient_id: id
     };
 
-
+    console.log(data);
 
     fetch("http://localhost:8080/api/v2/appointments/save", {
         method: "POST",
@@ -201,7 +200,65 @@ function saveAppointment() {
             closeAppointmentModal();
             document.getElementById("appointmentDoctorName").value = "";
             document.getElementById("appointmentTime").value = "";
-           document.getElementById("appointmentDate").value = "";
+            document.getElementById("appointmentDate").value = "";
             document.getElementById("appointmentDesc").value = "";
         });
 }
+
+
+
+function loadAppointments(patientId) {
+    fetch(`http://localhost:8080/api/v2/appointments/patient/${patientId}`)
+        .then(res => res.json())
+        .then(data => {
+            const tableBody = document.querySelector("#appointmentTable tbody");
+            tableBody.innerHTML = "";
+
+            data.forEach(app => {
+                tableBody.innerHTML += `
+                    <tr>
+                        <td>${app.doctorName}</td>
+                        <td>${app.date}</td>
+                        <td>${app.time}</td>
+                        <td>${app.description}</td>
+                        <td>
+                             <button onclick='deleteAppointment(${app.id})'
+                                style="background:#d33;color:white;padding:4px 8px;border-radius:5px;">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        });
+}
+
+function deleteAppointment(appointmentId) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+            fetch(`http://localhost:8080/api/v2/appointments/delete/${appointmentId}`, {
+                method: "DELETE"
+            })
+
+            Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+            });
+        }
+    });
+
+
+}
+
+

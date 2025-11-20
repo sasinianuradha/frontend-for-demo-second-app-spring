@@ -64,7 +64,7 @@
             <input type="text" id="appointmentDoctorName" class="custom-input" title="appointmentDoctorName">
             <label>Time</label>
             <input type="time" id="appointmentTime" class="custom-input" title="appointmentTime">
-            
+
             <label>Date</label>
             <input type="date" id="appointmentDate" class="custom-input" title="appointmentDate">
 
@@ -72,7 +72,29 @@
             <textarea id="appointmentDesc" class="custom-input" title="appointmentDesc"></textarea>
 
             <button class="custom-save-btn" onclick="saveAppointment()">Save Appointment</button>
+
         </div>
+        <div class="container">
+            <h1>Appoinments</h1>
+
+            <table class="patient" id="appointmentTable">
+                <thead>
+                    <tr>
+                        <th>Docter Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+        </div>
+
+
     </div>
 
 
