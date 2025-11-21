@@ -58,16 +58,18 @@
 
  input,
  textarea {
-   width: 100%;
+  width: 100%;
    padding: 8px;
    margin-top: 5px;
    border: 1px solid #ccc;
    border-radius: 6px;
    box-sizing: border-box;
-   font-size: 14px;
+  
  }
 
  textarea {
+ 
+   font-size: 14px;
    resize: vertical;
    min-height: 70px;
  }
@@ -116,77 +118,112 @@
 
 
 
-  .patient td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #dddddd;
-  }
+ .patient td {
+   padding: 12px 15px;
+   border-bottom: 1px solid #dddddd;
+ }
 
-  @media screen and (max-width: 1024px) {
-    body{
-      height: max-content;
-      width: max-content;
-    }
-    
-  }
+ @media screen and (max-width:1440px) {
+   body {
+     height: max-content;
+     width: max-content;
+   }
 
- 
-.custom-modal {
-    display: none; 
+ }
+ @media screen and (max-width:1440px) {
+  .custom-modal {
     position: fixed;
-    z-index: 1000;
-    padding-top: 80px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.6);
+    width: max-content;
+    height: max-content;
+    padding-top: 10px;
+    left: 4em;
+    top: 5px;
+  }
+  
+ }
+.custom-modal-form{
+  display: flex;
+  flex-direction: column;
+  row-gap: 1px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  width: 300px;
 }
 
-.custom-modal-content {
-    background: #fff;
-    margin: auto;
-    padding: 25px;
-    width: 400px;
-    border-radius: 10px;
-    animation: popupAnim 0.3s ease;
-}
+ .custom-modal {
+   display: none;
+   flex-direction: row;
+   justify-content: wrap;
+   /* z-index: 1000; */
+   padding-top: 0px;
+   padding-bottom: 1px;
+   top: 5px;
+   bottom: 1px;
+   left: 4em;
+   right: 4px;
+   position: fixed;
+   width: max-content;
+   height: 100vh;
+   background: white;
 
-@keyframes popupAnim {
-    from { transform: scale(0.8); opacity: 0; }
-    to   { transform: scale(1); opacity: 1; }
-}
+ }
 
-.custom-close {
-    float: right;
-    font-size: 24px;
-    cursor: pointer;
-    color: #333;
-}
+ .custom-modal-content {
+  
+  height: 70vh;
+   background: #fff;
+   padding: 25px;
+   width: max-content;
+   border-radius: 10px;
+   display: flex;
+   justify-items: wrap;
+   flex-direction: row;
+   animation: popupAnim 0.3s ease;
+ }
 
-.custom-close:hover {
-    color: red;
-}
+ @keyframes popupAnim {
+   from {
+     transform: scale(0.8);
+     opacity: 0;
+   }
 
-.custom-input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    margin-bottom: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+   to {
+     transform: scale(1);
+     opacity: 1;
+   }
+ }
 
-.custom-save-btn {
-    width: 100%;
-    background: #28a745;
-    padding: 10px;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-}
+ .custom-close {
+   float: right;
+   font-size: 24px;
+   cursor: pointer;
+   color: #333;
+ }
 
-.custom-save-btn:hover {
-    opacity: 0.9;
-}
+ .custom-close:hover {
+   color: red;
+ }
+
+ .custom-input {
+   width: 100%;
+   padding: 10px;
+   margin-top: 6px;
+   margin-bottom: 14px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+ }
+
+ .custom-save-btn {
+   width: 100%;
+   background: #28a745;
+   padding: 10px;
+   color: white;
+   border: none;
+   border-radius: 6px;
+   cursor: pointer;
+   font-weight: bold;
+ }
+
+ .custom-save-btn:hover {
+   opacity: 0.9;
+ }

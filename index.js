@@ -31,7 +31,7 @@ function saveData() {
             return response.json();
         })
         .then(data => {
-            console.log("Patient saved:", data);
+            //console.log("Patient saved:", data);
             alert("Patient saved successfully!");
             loadPatients()
         })
@@ -101,7 +101,7 @@ function loadPatients() {
 
 function updatePatient(patient) {
 
-    console.log(patient)
+    //console.log(patient)
     document.getElementById("name").value = patient.name;
     document.getElementById("age").value = patient.age;
     document.getElementById("adress").value = patient.address;
@@ -160,11 +160,12 @@ function makeAppointment(id) {
     }
 
 
-    //alert("Create appointment for patient ID: " + id);
+    // alert("Create appointment for patient ID: " + id);
 }
 
 function closeAppointmentModal() {
     document.getElementById("customModal").style.display = "none";
+
 }
 
 function saveAppointment() {
@@ -173,7 +174,7 @@ function saveAppointment() {
     const time = document.getElementById("appointmentTime").value;
     const date = document.getElementById("appointmentDate").value;
     const desc = document.getElementById("appointmentDesc").value;
-
+    loadAppointments(id);
     if (!doctorName || !time || !date || !desc) {
         alert("Please fill all Details!");
         return;
@@ -196,12 +197,13 @@ function saveAppointment() {
     })
         .then(res => res.json())
         .then(() => {
-            alert("Appointment saved!");
-            closeAppointmentModal();
+            // alert("Appointment saved!");
+            //closeAppointmentModal();
             document.getElementById("appointmentDoctorName").value = "";
             document.getElementById("appointmentTime").value = "";
             document.getElementById("appointmentDate").value = "";
             document.getElementById("appointmentDesc").value = "";
+            // closeAppointmentModal();
         });
 }
 
@@ -234,7 +236,7 @@ function loadAppointments(patientId) {
 }
 
 function deleteAppointment(appointmentId) {
-      Swal.fire({
+    Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
         icon: "warning",
