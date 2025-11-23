@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="row">
+    <div class="fristContainer">
+        <h2>Create Appointment</h2>
+
+        <input type="hidden" id="appointmentPatientId">
+
+        <label>Doctor Name</label>
+        <input type="text" id="appointmentDoctorName" title="text">
+
+        <label>Time</label>
+        <input type="time" id="appointmentTime" title="time">
+
+        <label>Date</label>
+        <input type="date" id="appointmentDate" title="date">
+
+        <label>Description</label>
+        <textarea id="appointmentDesc" title="appointmentDesc"></textarea>
+
+        <button onclick="saveAppointment()" class="custom-save-btn">Save Appointment</button>
+        <button onclick="goBack()" style="margin-top:10px;background:#555; color:white;">Back</button>
+    </div>
+
+
+    <div class="container">
+        <h1>Appointments</h1>
+
+        <table class="patient" id="appointmentTable">
+            <thead>
+            <tr>
+                <th>Doctor Name</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="appointment.js"></script>
+</body>
+</html>

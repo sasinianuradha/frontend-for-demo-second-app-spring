@@ -153,114 +153,11 @@ function deletePatient(id) {
 }
 
 function makeAppointment(id) {
-    if (id) {
-        document.getElementById("appointmentPatientId").value = id;
-        document.getElementById("customModal").style.display = "flex";
-        loadAppointments(id);
-    }
 
+     window.location.href = `appointment.html?patientId=${id}`;
+    
 
-    // alert("Create appointment for patient ID: " + id);
+ 
 }
 
-function closeAppointmentModal() {
-    document.getElementById("customModal").style.display = "none";
-
-}
-
-function saveAppointment() {
-    const id = document.getElementById("appointmentPatientId").value;
-    const doctorName = document.getElementById("appointmentDoctorName").value;
-    const time = document.getElementById("appointmentTime").value;
-    const date = document.getElementById("appointmentDate").value;
-    const desc = document.getElementById("appointmentDesc").value;
-    loadAppointments(id);
-    if (!doctorName || !time || !date || !desc) {
-        alert("Please fill all Details!");
-        return;
-    }
-
-    const data = {
-        doctorName: doctorName,
-        description: desc,
-        date: date,
-        time: time,
-        patient_id: id
-    };
-
-    console.log(data);
-
-    fetch("http://localhost:8080/api/v2/appointments/save", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    })
-        .then(res => res.json())
-        .then(() => {
-            // alert("Appointment saved!");
-            //closeAppointmentModal();
-            document.getElementById("appointmentDoctorName").value = "";
-            document.getElementById("appointmentTime").value = "";
-            document.getElementById("appointmentDate").value = "";
-            document.getElementById("appointmentDesc").value = "";
-            // closeAppointmentModal();
-        });
-}
-
-
-
-function loadAppointments(patientId) {
-    fetch(`http://localhost:8080/api/v2/appointments/patient/${patientId}`)
-        .then(res => res.json())
-        .then(data => {
-            const tableBody = document.querySelector("#appointmentTable tbody");
-            tableBody.innerHTML = "";
-
-            data.forEach(app => {
-                tableBody.innerHTML += `
-                    <tr>
-                        <td>${app.doctorName}</td>
-                        <td>${app.date}</td>
-                        <td>${app.time}</td>
-                        <td>${app.description}</td>
-                        <td>
-                             <button onclick='deleteAppointment(${app.id})'
-                                style="background:#d33;color:white;padding:4px 8px;border-radius:5px;">
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            });
-        });
-}
-
-function deleteAppointment(appointmentId) {
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-
-    }).then((result) => {
-
-        if (result.isConfirmed) {
-            fetch(`http://localhost:8080/api/v2/appointments/delete/${appointmentId}`, {
-                method: "DELETE"
-            })
-
-            Swal.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success"
-            });
-        }
-    });
-
-
-}
-
-
+ 
