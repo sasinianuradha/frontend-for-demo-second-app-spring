@@ -13,6 +13,7 @@
     <div class="row">
         <div class="fristContainer">
             <h1 class="title">Patient</h1>
+            
             <label for="name">Name</label>
             <input type="text" id="name" placeholder="Enter Name">
 
@@ -24,8 +25,9 @@
 
             <label for="phoneNumber">Phone Number</label>
             <input type="text" id="phoneNumber" placeholder="Enter Phone Number">
-
-
+            <label for="photo">Photo</label>
+            <input type="file" id="photo" accept="image/*">
+            
             <button type="button" onclick="saveData()" id="saveBtn">Save Data</button>
 
         </div>
@@ -40,6 +42,7 @@
                         <th>Age</th>
                         <th>Address</th>
                         <th>Phone Number</th>
+                        <th>Photo</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -51,7 +54,7 @@
     </div>
 
 
-    
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

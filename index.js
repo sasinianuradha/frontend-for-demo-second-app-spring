@@ -1,11 +1,14 @@
 
 loadPatients()
 
+let updatePatientId = null;
+
 function saveData() {
     const nameValue = document.getElementById("name").value;
     const ageValue = document.getElementById("age").value;
     const addressValue = document.getElementById("adress").value;
     const phoneNumberValue = document.getElementById("phoneNumber").value;
+    const photoFile = document.getElementById("photo").files[0];
 
 
     const patientData = {
@@ -14,36 +17,57 @@ function saveData() {
         address: addressValue,
         phoneNumber: phoneNumberValue
     };
-
-
+    // Creating FormData
+    const formData = new FormData();
+    formData.append("patient", new Blob([JSON.stringify(patientData)], { type: "application/json" }));
+    if (photoFile) {
+        formData.append("photo", photoFile);
+    }
 
     fetch("http://localhost:8080/api/v1/patients/save", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(patientData)
+        body: formData
+        //  Do NOT set Content-Type header manually
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Failed to save patient: " + response.statusText);
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-            //console.log("Patient saved:", data);
             alert("Patient saved successfully!");
-            loadPatients()
+            loadPatients();
         })
         .catch(error => {
             console.error("Error:", error);
-            alert("Error saving patient. Check console.");
+            alert("Error saving patient.");
         });
 
 
-    if (updatePatient) {
 
-        fetch(`http://localhost:8080/api/v1/patients/update/${updatePatient}`, {
+    // fetch("http://localhost:8080/api/v1/patients/save", {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify(patientData)
+    // })
+    //     .then(response => {
+    //         if (!response.ok) {
+    //             throw new Error("Failed to save patient: " + response.statusText);
+    //         }
+    //         return response.json();
+    //     })
+    //     .then(data => {
+    //         //console.log("Patient saved:", data);
+    //         alert("Patient saved successfully!");
+    //         loadPatients()
+    //     })
+    //     .catch(error => {
+    //         console.error("Error:", error);
+    //         alert("Error saving patient. Check console.");
+    //     });
+
+
+    if (updatePatientId) {
+
+        fetch(`http://localhost:8080/api/v1/patients/update/${updatePatientId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(patientData)
@@ -54,7 +78,7 @@ function saveData() {
 
 
                 document.getElementById("saveBtn").innerText = "Save Data";
-                updatePatient = null;
+                updatePatientId = null;
 
                 loadPatients();
             });
@@ -77,6 +101,8 @@ function loadPatients() {
             tableBody.innerHTML = "";
 
             patients.forEach(patient => {
+
+                console.log(patient.photoUrl);
                 const row = `
                     <tr>
                         <td>${patient.id}</td>
@@ -84,6 +110,7 @@ function loadPatients() {
                         <td>${patient.age}</td>
                         <td>${patient.address}</td>
                         <td>${patient.phoneNumber}</td>
+                        <td><img src="http://localhost:8080/${patient.photoUrl}" width="60" height="60" style="object-fit:cover;border-radius:8px"></td>
                         <td>
                             <button onclick='updatePatient(${JSON.stringify(patient)})' style"justify-content:center; flex-wrap: wrap; margin-top: 2px; padding: 6px 12px; background-color: #0489f7ff; color: white;">Update</button>
                             <button onclick="deletePatient(${patient.id})" style = "justify-content:center; flex-wrap: wrap; margin-top: 2px; padding: 6px 12px; background-color: #cb3c3cff; color:white">Delete</button>
@@ -96,19 +123,20 @@ function loadPatients() {
         })
 
         .catch(error => console.error("Error:", error));
+
 }
 
 
 function updatePatient(patient) {
 
-    //console.log(patient)
+    console.log(patient)
     document.getElementById("name").value = patient.name;
     document.getElementById("age").value = patient.age;
     document.getElementById("adress").value = patient.address;
     document.getElementById("phoneNumber").value = patient.phoneNumber;
 
 
-    updatePatient = patient.id;
+    updatePatientId = patient.id;
 
 
     document.getElementById("saveBtn").innerText = "Update Data";
@@ -154,10 +182,9 @@ function deletePatient(id) {
 
 function makeAppointment(id) {
 
-     window.location.href = `appointment.html?patientId=${id}`;
-    
+    window.location.href = `appointment.html?patientId=${id}`;
 
- 
+
+
 }
 
- 
